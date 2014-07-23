@@ -1,0 +1,26 @@
+extends layout
+
+block append styles
+    style.
+        body{
+            overflow-y: scroll;
+        }
+
+block append content
+    //- common templates are inserted in div.header
+    div.header
+    //- page templates are inserted in div.content
+    div.content
+
+block append javascripts
+    include include/templates/commonTemplates
+    include include/templates/homeTemplates
+    include include/templates/resultTemplates
+    include include/templates/brickbinTemplates
+    include include/templates/primerTemplates
+
+    != js('bricklayer')
+    != js('RFCService')
+    != js('queryService')
+    != js('primerService')
+    != js('brickbin')

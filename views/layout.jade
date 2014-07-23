@@ -1,0 +1,20 @@
+!!! 5
+html(lang='en')
+    head
+        meta(charset='UTF-8')
+        title Bricklayer
+        link(href="http://fonts.googleapis.com/css?family=PT+Serif|Open+Sans", rel="stylesheet", type="text/css")
+        != css('gumby/gumby')
+        != css('style')
+        != css('jquery.dataTables.min.css')
+        block styles
+
+    body
+        block content
+        include include/footer
+
+    block javascripts
+        != js('lib/jquery-2.0.2.min')
+        != js('lib/jquery.cookie.js')
+        != js('lib/handlebars.min')
+        != js('lib/jquery.dataTables.min.js')

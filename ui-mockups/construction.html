@@ -1,0 +1,169 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>bricklayer construction</title>
+
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400' rel='stylesheet' type='text/css' />
+	<link href="css/gumby/gumby.css" rel="stylesheet" />
+	<link rel="stylesheet" href="css/colorbox.css" />
+
+	<script src="js/jquery-1.9.1.js"></script>
+	<script src="js/jquery.colorbox-min.js"></script>
+	<script>
+		$(function() {
+			var parts = ["promoter", "rbs", "coding", "terminator", "promoter", "rbs", "coding", "terminator"];
+			var container = $("#scroller");
+
+			function computeWidth() {
+				var margin = 5;
+				var addWidth = 30;
+				var partWidth = 150;
+				return parts.length * 150 +
+					parts.length * 4 * margin +
+					parts.length * addWidth +
+					addWidth + margin + margin;
+			}
+
+			function renderDNA() {
+				
+				container.empty();
+				var add = $("<div>").addClass("add");
+
+				for (var i = 0; i < parts.length; i++) {
+					container.append(add.clone());
+					var part = $("<div>").addClass(parts[i]).addClass("part")
+					part.append($("<div>").addClass("title").text("K123456"));
+					var description = "**highly** engineered mutant of red fluorescent protein from Discosoma striata (coral)";
+					part.append($("<div>").text(description));
+					container.append(part);
+				};
+
+				container.append(add.clone());
+				container.css("width", computeWidth());
+			}
+
+			renderDNA();
+
+			// Show part info when clicking on a part
+			container.on("click", ".part", function(e) {
+				var target = $(e.currentTarget);
+				$(".part").removeClass("selected");
+				target.addClass("selected");
+
+				// Populate part info
+				$("#info-title").text("part info: " + "K12345");
+				$("#info-pane").text("This is the part info fetched from the registry.");
+			});
+
+			// Prompt to add a part when clicking on an add link
+			container.on("click", ".add", function(e) {
+				$.colorbox({ inline: true, href: "#addPartForm" });
+			});
+		});
+	</script>
+</head>
+<body>
+	<div class="row">
+		<div class="twelve columns text-right">
+			<a href="#">My Cart (6)</a>
+			&nbsp;
+			Martin Hanzel
+		</div>
+	</div>
+
+	<div class="row">
+		<h1>construction</h1>
+	</div>
+
+	<div class="row">
+		<p>Click on the "add" buttons to add parts to your fragment.</p>
+		<div id="constructionLine">
+			<div id="scroller">
+				
+			</div>
+		</div>
+	</div>
+
+	<div class="row text-right">
+		<br />
+		<div class="medium secondary btn"><a href="#">Restart</a></div>
+		&nbsp;&nbsp;&nbsp;
+		<div class="medium primary btn"><a href="#" class="text-black">Save</a></div>
+	</div>
+
+	<div class="row">
+		<h1 id="info-title">part info</h1>
+		<div id="info-pane">Select a part from your fragment to get its data.</div>
+	</div>
+
+	<div class="row">
+		<h1>cart</h1>
+		<ul id="cart" class="tiles six_up">
+				<li><div class="promoter">
+					<div class="title">J23100</div>
+					<div>constitutive promoter family member</div>
+				</div></li>
+				<li><div class="device">
+					<div class="title">K389005</div>
+					<div>Kanamycin resistance</div>
+				</div></li>
+				<li><div class="coding">
+					<div class="title">E1010</div>
+					<div>**highly** engineered mutant of red fluorescent protein from Discosoma striata (coral)</div>
+				</div></li>
+				<li><div class="terminator">
+					<div class="title">B1004</div>
+					<div>Terminator (artificial, small, %T~=55)</div>
+				</div></li>
+				<li><div class="rbs">
+					<div class="title">J61100</div>
+					<div>Ribosome Binding Site Family Member</div>
+				</div></li>
+				<li><div class="promoter">
+					<div class="title">K190017</div>
+					<div>Copper Promoter (CueR regulated)</div>
+				</div></li>
+				<li><div class="coding">
+					<div class="title">K389002</div>
+					<div>Mutated virG</div>
+				</div></li>
+			</ul>
+	</div>
+
+	<div class="hide">
+		<div id="addPartForm">
+			<h2>add part</h2>
+			<ul id="addPartList" >
+				<li><div class="promoter">
+					J23100: constitutive promoter family member
+				</div></li>
+				<li><div class="device">
+					K389005: Kanamycin resistance
+				</div></li>
+				<li><div class="coding">
+					E1010: **highly** engineered mutant of red fluorescent protein from Discosoma striata (coral)
+				</div></li>
+				<li><div class="terminator">
+					B1004: Terminator (artificial, small, %T~=55)
+				</div></li>
+				<li><div class="rbs">
+					J61100: Ribosome Binding Site Family Member
+				</div></li>
+				<li><div class="promoter">
+					K190017: Copper Promoter (CueR regulated)
+				</div></li>
+				<li><div class="coding">
+					K389002: Mutated virG
+				</div></li>
+				<li><div class="promoter">
+					K086018: modified Lutz-Bujard LacO promoter, with alternative sigma factor sigma24
+				</div></li>
+				<li><div class="coding">
+					K389002: Mutated virG
+				</div></li>
+			</ul>
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,6 @@
+script#templateUserHeader(type='text/x-handlebars-template')
+    .row
+        .twelve.columns.text-right
+            a(href='#', onclick="Bricklayer.HomeView.render()") Search | 
+            a(href='#', onclick="Bricklayer.BinView.render(Bricklayer.bin)") Brick Bin | 
+            a(href='#', onclick="Bricklayer.PrimerView.render(Bricklayer.bin)") Generate

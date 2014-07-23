@@ -1,0 +1,97 @@
+/* --------------------------------------------------------------
+
+   reset.css
+   * Resets default browser CSS.
+
+-------------------------------------------------------------- */
+
+html {
+  margin:0;
+  padding:0;
+  border:0;
+}
+
+body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, code,
+del, dfn, em, img, q, dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, dialog, figure, footer, header,
+hgroup, nav, section {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
+}
+
+/* This helps to make newer HTML5 elements behave like DIVs in older browers */
+article, aside, details, figcaption, figure, dialog,
+footer, header, hgroup, menu, nav, section {
+    display:block;
+}
+
+/* Line-height should always be unitless! */
+body {
+  line-height: 1.5;
+  background: white;
+}
+
+/* Tables still need 'cellspacing="0"' in the markup. */
+table {
+  border-collapse: separate;
+  border-spacing: 0;
+}
+/* float:none prevents the span-x classes from breaking table-cell display */
+caption, th, td {
+  text-align: left;
+  font-weight: normal;
+  float:none !important;
+}
+table, th, td {
+  vertical-align: middle;
+}
+
+/* Remove possible quote marks (") from <q>, <blockquote>. */
+blockquote:before, blockquote:after, q:before, q:after { content: ''; }
+blockquote, q { quotes: "" ""; }
+
+/* Remove annoying border on linked images. */
+a img { border: none; }
+
+/* Remember to define your own focus styles! */
+:focus { outline: 0; }
+
+/* Grid, based on 1140 grid v2 */
+.grid{padding-left:20px;padding-right:20px;}
+.row{margin-left:auto;margin-right:auto;max-width:1140px;min-width:400px;overflow:hidden;}
+.column1, .column2, .column3, .column4, .column5, .column6, .column7, .column8, .column9, .column10, .column11 {float:left;margin-right: 3.8%;min-height: 1px;}
+.column1{width:4.85%;}
+.column2{width:13.45%;}
+.column3{width:22.05%;}
+.column4{width:30.75%;}
+.column5{width:39.45%;}
+.column6{width:48%;}
+.column7{width:56.75%;}
+.column8{width: 65.4%;}
+.column9{width:74.05%;}
+.column10{width:82.7%;}
+.column11{width:91.35%;}
+.column12{float:left;width:100%;}
+.lastcol{margin-right:0px;}
+.grid img, .grid object, .grid embed {max-width:100%;}
+.grid img{height:auto;}
+
+/* Grid on mobile */
+@media handheld, only screen and (max-width: 500px) {
+        body {-webkit-text-size-adjust: none;}
+        .row, .grid{margin-left:0px;margin-right:0px;min-width:0px;padding:0px;width:100%;}
+        .column1, .column2, .column3, .column4, .column5, .column6, .column7, .column8, .column9, .column10, .column11, .column12 {float:none;margin-left:0px;margin-right:0px;padding-left:20px;padding-right:20px;width:auto;}
+}
+
+.left { float: left; }
+.right { float: right; }
+.align-center { text-align: center; }
+.align-right { text-align: right; }

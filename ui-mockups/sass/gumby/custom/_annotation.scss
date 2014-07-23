@@ -1,0 +1,36 @@
+// ==== Annotation and utility classes ====
+.text-large {
+	font-size: 1.5em;
+}
+
+// RFC supported or unsupported boxes
+$rfc-supported-colour: #33ee33;
+$rfc-unsupported-color: #ee4444;
+$rfc-lighten: 32%;
+.rfc-yes {
+	background-color: lighten($rfc-supported-colour, $rfc-lighten);
+	border: 1px solid $rfc-supported-colour;
+	padding: 0px 2px;
+}
+
+.rfc-no {
+	background-color: lighten($rfc-unsupported-color, $rfc-lighten);
+	border: 1px solid $rfc-unsupported-color;
+	padding: 0px 2px;
+}
+
+// ==== Add part type colours to gumby labels ====
+// green, red, dark, yellow
+$part-types:
+	device #5c3566 white,
+	rbs #58c026 darken($body-font-color, 10%),
+	terminator #ca3838 white,
+	coding #4a4d50 white,
+	promoter #e6a82f darken($body-font-color, 10%);
+
+@each $type in $part-types {
+	.#{nth($type, 1)} {
+		background: nth($type, 2);
+		color: nth($type, 3);
+	}
+}

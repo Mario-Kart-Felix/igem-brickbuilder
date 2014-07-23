@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Results for 'awesome'</title>
+
+	<link href='http://fonts.googleapis.com/css?family=PT+Serif|Open+Sans' rel='stylesheet' type='text/css' />
+	<link rel="stylesheet" href="css/gumby/gumby.css" />
+	<style>
+	body{
+		overflow-y: scroll;
+	}
+	</style>
+
+	<script src="js/jquery-1.9.1.js"></script>
+	<script>
+	$(function() {
+		$(".part-header").click(function(e) {
+			e.preventDefault();
+			var target = $(e.currentTarget);
+			var part = target.parents("tr").data("part");
+			var extended = $("tr.partExtended." + part);
+			var icon = target.find(".resultIcon");
+			if (extended.css("display") == "none") {
+				extended.show();
+				icon.toggleClass("icon-right-open").toggleClass("icon-down-open");
+			}
+			else {
+				extended.hide();
+				icon.toggleClass("icon-right-open").toggleClass("icon-down-open");
+			}
+		});
+	});
+	</script>
+</head>
+<body>
+	<div class="row">
+		<div class="twelve columns text-right">
+			<a href="construction.html">My Cart (6)</a>
+			&nbsp;
+			Martin Hanzel
+		</div>
+	</div>
+
+	<div class="row">
+		<h2>search: 'awesome'</h2>
+	</div>
+
+	<!-- Search info bar -->
+	<div class="row">
+		<div class="six columns">
+			4 results, page 1 of 1
+		</div>
+		<div class="six columns text-right">
+			Sort by
+			<div class="field picker">
+				<select>
+					<option value="Relevance">Relevance</option>
+					<option value="Length">Length</option>
+					<option value="Rating">Rating</option>
+					<option value="Stars">Stars</option>
+				</select>
+			</div>
+		</div>
+	</div>
+
+	<!-- Search results -->
+	<div class="row">
+		<table id="searchResultsTable">
+			<!-- Sorting columns -->
+			<thead>
+				<td><a href="#">Part ID <i class="icon-up-dir"></i></a></td>
+				<td><a href="#">Type</a></td>
+				<td><a href="#">Length</a></td>
+				<td>Assembly</td>
+				<td><a href="#">Reviews</a></td>
+				<td></td>
+			</thead>
+
+			<!-- Part -->
+			<tr data-part="K12345">
+				<td>
+					<a href="#" class="text-large part-header">
+						<i class="icon-right-open resultIcon"></i>
+						K12345
+					</a>
+				</td>
+				<td>
+					<span class="promoter label">promoter</span>
+				</td>
+				<td>
+					<span>1000 bp</span>
+				</td>
+				<td>
+					<span>
+						<span class="rfc-yes">10</span>
+						<span class="rfc-yes">12</span>
+						<span class="rfc-yes">21</span>
+						<span class="rfc-no">22</span>
+						<span class="rfc-no">25</span>
+						<span class="rfc-yes">1000</span>
+					</span>
+				</td>
+				<td>
+					<span>
+						<i class="icon-star"></i>7
+						<i class="icon-heart"></i>4.6/5
+					</span>
+				</td>
+				<td class="text-right">
+					<a href="#" class="text-large">add</a>
+				</td>
+			</tr>
+			<tr class="K12345 partExtended">
+				<td colspan="6">
+					<p class="description">
+						This is an awesome part that generates awesomeness wherever it is placed. No genetic network may be awesome without this part.
+					</p>
+					<p class="remarks">
+						Submitted 2012-12-12<br />
+						<a href="#" class="red">Not available</a> -
+						<span class="green">Works</span> -
+						21 uses
+					</p>
+				</td>
+			</tr>
+
+			<tr data-part="K23456">
+				<td>
+					<a href="#" class="text-large part-header">
+						<i class="icon-right-open resultIcon"></i>
+						K23456
+					</a>
+				</td>
+				<td>
+					<span class="rbs label">rbs</span>
+				</td>
+				<td>
+					<span>1000 bp</span>
+				</td>
+				<td>
+					<span>
+						<span class="rfc-yes">10</span>
+						<span class="rfc-yes">12</span>
+						<span class="rfc-yes">21</span>
+						<span class="rfc-no">22</span>
+						<span class="rfc-no">25</span>
+						<span class="rfc-yes">1000</span>
+					</span>
+				</td>
+				<td>
+					<span >
+						<i class="icon-star"></i>7
+						<i class="icon-heart"></i>4.6/5
+					</span>
+				</td>
+				<td class="text-right">
+					<a href="#" class="text-large">add</a>
+				</td>
+			</tr>
+			<tr class="K23456 partExtended">
+				<td colspan="6">
+					<p class="description">
+						This is an awesome part that generates awesomeness wherever it is placed. No genetic network may be awesome without this part.
+					</p>
+					<p class="remarks">
+						Submitted 2012-12-12<br />
+						<a href="#" class="red">Not available</a> -
+						<span class="green">Works</span> -
+						21 uses
+					</p>
+				</td>
+			</tr>
+
+			<tr data-part="K34567">
+				<td>
+					<a href="#" class="text-large part-header">
+						<i class="icon-right-open resultIcon"></i>
+						K34567
+					</a>
+				</td>
+				<td>
+					<span class="coding label">coding</span>
+				</td>
+				<td>
+					<span>1000 bp</span>
+				</td>
+				<td>
+					<span>
+						<span class="rfc-yes">10</span>
+						<span class="rfc-yes">12</span>
+						<span class="rfc-yes">21</span>
+						<span class="rfc-no">22</span>
+						<span class="rfc-no">25</span>
+						<span class="rfc-yes">1000</span>
+					</span>
+				</td>
+				<td>
+					<span>
+						<i class="icon-star"></i>7
+						<i class="icon-heart"></i>4.6/5
+					</span>
+				</td>
+				<td class="text-right">
+					<a href="#" class="text-large">add</a>
+				</td>
+			</tr>
+			<tr class="K34567 partExtended">
+				<td colspan="6">
+					<p class="description">
+						This is an awesome part that generates awesomeness wherever it is placed. No genetic network may be awesome without this part.
+					</p>
+					<p class="remarks">
+						Submitted 2012-12-12<br />
+						<a href="#" class="red">Not available</a> -
+						<span class="green">Works</span> -
+						21 uses
+					</p>
+				</td>
+			</tr>
+
+			<tr data-part="K45678">
+				<td>
+					<a href="#" class="text-large part-header">
+						<i class="icon-right-open resultIcon"></i>
+						K45678
+					</a>
+				</td>
+				<td>
+					<span class="terminator label">terminator</span>
+				</td>
+				<td>
+					<span>1000 bp</span>
+				</td>
+				<td>
+					<span>
+						<span class="rfc-yes">10</span>
+						<span class="rfc-yes">12</span>
+						<span class="rfc-yes">21</span>
+						<span class="rfc-no">22</span>
+						<span class="rfc-no">25</span>
+						<span class="rfc-yes">1000</span>
+					</span>
+				</td>
+				<td>
+					<span>
+						<i class="icon-star"></i>7
+						<i class="icon-heart"></i>4.6/5
+					</span>
+				</td>
+				<td class="text-right">
+					<a href="#" class="text-large">add</a>
+				</td>
+			</tr>
+			<tr class="K45678 partExtended">
+				<td colspan="6">
+					<p class="description">
+						This is an awesome part that generates awesomeness wherever it is placed. No genetic network may be awesome without this part.
+					</p>
+					<p class="remarks">
+						Submitted 2012-12-12<br />
+						<a href="#" class="red">Not available</a> -
+						<span class="green">Works</span> -
+						21 uses
+					</p>
+				</td>
+			</tr>
+
+			<!-- Important! This row prevents odd layout changes when parts are shown. -->
+			<tr class="K45678">
+				<td colspan="6" style="width: 100%; height: 1px; padding: 0px;">
+				</td>
+			</tr>
+		</table>
+	</div>
+	
+	<div id="footer">
+		&copy; uOttawa iGEM 2013. This is freaking awesoooooome.
+	</div>
+</body>
+</html>

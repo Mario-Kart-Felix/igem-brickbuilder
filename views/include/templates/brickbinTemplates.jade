@@ -1,0 +1,79 @@
+script#templateBrickBin(type='text/x-handlebars-template')
+    .row
+        h2 Your Brick Bin
+    //- Search info bar
+    {{#if bricks.length}}
+    .row
+        h1
+
+    .row
+        .six.columns
+            | {{bricks.length}} bricks in the bin
+            
+    //- Search results
+    .row
+        table#searchResultsTable
+            //- Sorting columns
+            thead
+                td
+                    a(href='#')
+                        | Part Name
+                        i.icon-up-dir
+                td
+                    a(href='#') Type
+                td
+                    a(href='#') Length
+                td Assembly
+                td
+                    a(href='#') Reviews
+                td
+            //- Part
+            tbody#results
+                {{#each bricks}}
+                tr(data-part='{{name}}')
+                    td
+                        a.text-large.part-header(class='toggle-{{name}}', href='#')
+                            i.icon-right-open.resultIcon
+                            | {{name}}
+                    td
+                        span.label(class='{{type}}') {{type}}
+                    td
+                        span {{length}} bp
+                    td
+                        span
+                            {{#each compatibility}}
+                            span(class='rfc-{{this}}') {{@key}}
+                            {{/each}}
+                    td
+                        span
+                            i.icon-star
+                            | {{stars}}
+                            i.icon-heart
+                            | {{rating}}/5
+                    td.text-right
+                        a.text-large(id='toggle-bin-{{name}}', href='#', onclick="Bricklayer.bin.removeBrick('{{name}}', this)") remove
+                tr.partExtended(class='toggle-{{name}}')
+                    td(colspan='6')
+                        p.description
+                            | {{description}}
+                        p.remarks
+                            | Submitted {{dateSubmitted}}
+                            br
+                            a.red(href='{{distributionUrl}}') {{availablility}}
+                            | -
+                            span.green {{works}}
+                            | -
+                            | {{numUses}} uses
+                {{/each}}
+
+            //- Important! This row prevents odd layout changes when parts are shown.
+            tfoot
+                tr
+                    td(colspan='6', style='width: 100%; height: 1px; padding: 0px;')
+
+    {{else}}
+    .row
+        You have no bricks in your bin.  Maybe you would like to &nbsp;
+        a(href="#", onclick="Bricklayer.HomeView.render()") search
+        ?
+    {{/if}}

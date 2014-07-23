@@ -1,0 +1,78 @@
+@mixin part-tile {
+	@include border-radius(7px);
+
+	border: 1px solid white;
+	font-size: 12px;
+	height: 100px;
+	line-height: 15px;
+	margin: 0px 5px;
+	padding: 2px;
+	overflow: hidden;
+	text-align: center; 
+	text-overflow: ellipsis;
+	width: 146px;
+
+	&.selected {
+		border: 1px solid red;
+	}
+
+	&:hover {
+		cursor: pointer;
+	}
+
+	.title {
+		font-size: 14px;
+		font-weight: bold;
+		margin-bottom: 3px;
+	}
+}
+
+#addPartList div {
+	@extend .alert;
+	@include hover-link;
+
+	overflow: hidden;
+	text-overflow: ellipsis;
+	width: 500px;
+	white-space: nowrap;
+
+	&:hover {
+		cursor: pointer;
+	}
+}
+
+#cart li>div {
+	@include part-tile;
+	margin-bottom: 5px;
+}
+
+#constructionLine {
+	overflow-x: scroll;
+	text-align: center;
+	width: 100%;
+
+	#scroller {
+		height: 105px;
+
+		.add {
+			@include border-radius(5px);
+
+			background-image: url('../../images/add-v.png');
+			float: left;
+			height: 100px;
+			margin: 0px 5px;
+			width: 30px;
+
+			&:hover {	
+				background-image: url('../../images/add-v-hover.png');
+				cursor: pointer;
+			}
+		}
+
+		.part {
+			@include part-tile;
+
+			float: left;
+		}
+	}
+}

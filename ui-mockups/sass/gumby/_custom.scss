@@ -1,0 +1,11 @@
+// Your custom SCSS should be written here...
+@import "custom/annotation";
+@import "custom/search";
+@import "custom/construction";
+
+#footer {
+	color: #aaa;
+	font-size: 12px;
+	margin-top: 10px;
+	text-align: center;
+}

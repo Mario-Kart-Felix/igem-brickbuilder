@@ -1,0 +1,19 @@
+
+//- Defines a reusable search form.
+mixin searchForm(title, id, action)
+    form(id='#{id}', action='#{action}')
+        .append.field
+            input.wide.text.input(type='text', placeholder='#{title}')
+            .medium.primary.btn
+                input(type='submit', value='Go')
+
+script#templateSearchFields(type='text/x-handlebars-template')
+    .row
+        .six.columns.text-right
+            img(src='images/bricklayerhome.jpg')
+        .six.columns.text-right
+            h1  
+            +searchForm("Text Search", "form-text-search", "#")
+            +searchForm("1000 Parts Search", "form-thousand-search", "#")
+            +searchForm("Subparts Search", "form-subpart-search", "#")
+            +searchForm("Superparts Search", "form-superpart-search", "#")

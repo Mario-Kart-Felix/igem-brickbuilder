@@ -1,0 +1,72 @@
+!!! 5
+html(lang='en')
+    head
+        meta(charset='UTF-8')
+        title bricklayer construction
+        link(href='http://fonts.googleapis.com/css?family=Open+Sans:400', rel='stylesheet', type='text/css')
+        link(href='css/gumby/gumby.css', rel='stylesheet')
+        script(src='js/jquery-1.9.1.js')
+        script(src='js/jquery-ui-1.10.3.custom.min.js')
+        script
+            $(function() {
+                $("#cart, #part").sortable({
+                    connectWith: ".sortable"
+                }).disableSelection();
+                // Show or hide help text in the part column if the list is empty
+                $("#part").on("sortremove", function(e) {
+                    var target = $(e.currentTarget);
+                    if (target.find("div").length == 0) {
+                        $("#part-message").show();
+                    }
+                });
+                $("#part").on("sortreceive", function(e) {
+                    $("#part-message").hide();
+                });
+            });
+    body
+        .row
+            .twelve.columns.text-right
+                a(href='#') My Cart (6)
+                | Martin Hanzel
+        .row
+            h1 construction
+        // Sortable columns
+        .row
+            .six.columns
+                h2 cart
+                ul#cart.sortable
+                    li
+                        div
+                            | J23100: constitutive promoter family member
+                    li
+                        div
+                            | K389005: Kanamycin resistance
+                    li
+                        div
+                            | E1010: **highly** engineered mutant of red fluorescent protein from Discosoma striata (coral)
+                    li
+                        div
+                            | B1004: Terminator (artificial, small, %T~=55)
+                    li
+                        div
+                            | J61100: Ribosome Binding Site Family Member
+                    li
+                        div
+                            | K190017: Copper Promoter (CueR regulated)
+                    li
+                        div
+                            | K389002: Mutated virG
+                    li
+                        div
+                            | K086018: modified Lutz-Bujard LacO promoter,with alternative sigma factor sigma24
+            #parts.six.columns
+                h2 part
+                ul#part.sortable(style='min-height: 200px;')
+                    li#part-message
+                        | (drag parts from the cart here)
+        .row
+            .twelve.columns.text-right
+                .medium.secondary.btn
+                    a(href='#') Restart
+                .medium.primary.btn
+                    a.text-black(href='#') Save

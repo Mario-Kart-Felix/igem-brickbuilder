@@ -1,0 +1,87 @@
+script#templatePrimers(type='text/x-handlebars-template')
+    .row
+        .six.columns
+            h2 Generate Primers
+            span
+                | Choose available RFC
+
+    //- Buttons to select RFC
+    .row
+        .six.columns.text-left
+            | RFC
+            | 
+            .btn.rfc.selected
+                a(href='#')
+                    | 10
+            | 
+            .btn.rfc.enabled
+                a(href='#')
+                    | 12
+            | 
+            .btn.rfc.enabled
+                a(href='#')
+                    | 21
+            | 
+            .btn.rfc.enabled
+                a(href='#')
+                    | 23
+            | 
+            .btn.rfc.enabled
+                a(href='#')
+                    | 25
+            | 
+        .six.columns.text-right
+            a(href='#')
+                | Click here to generate primer
+
+    //- Info on selected part
+    .row(style='border: 1px solid #000000; padding: 10px')
+        h3 Brick Info
+        .row
+            p.description
+                | Brick description here
+            p.remarks
+                | Submitted at some time
+                br
+                a.red(href='#') Availabe/Not Available
+                |  - 
+                span.green Works/Doesn't work
+                |  - 
+                | # of uses
+
+    .row
+        | Choose bricks to be used in construct
+
+    .row
+        //- List of parts in brickbin
+        .four.columns.text-center
+            h3 Brick Bin
+            form
+                select(multiple='#', size='7', name='mytextarea')
+                    {{#each bricks}}
+                    option(value='{{name}}', name='{{name}}', data-part='{{name}}')
+                        | {{name}}
+                    {{/each}}
+
+        //- Buttons to add, remove and rearrange parts in construct
+        .four.columns.text-center
+            .row
+                h1 // Just empty space
+                h1
+            .row
+                ul.tiles.two_up
+                    li.btn.medium.default
+                        input#moveUp(type='button', value='Move Up')
+                    li.btn.medium.default
+                        input#moveDown(type='button', value='Move Down')
+                    li.btn.medium.default
+                        input#addBrick(type='button', value='Add')
+                    li.btn.medium.default
+                        input#deleteBrick(type='button', value='Delete')
+
+        //- List of parts to be built in construct
+        .four.columns.text-center
+            h3 Construct Bin
+            form
+                select(multiple='#', size='7', name='mytextarea')
+        

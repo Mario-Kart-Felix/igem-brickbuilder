@@ -1,0 +1,29 @@
+extends layout
+
+//- Defines a reusable search form.
+mixin searchForm(title, id, action)
+    form(id="#{id}", action="#{action}")
+        input(type="text", placeholder="#{title}")
+        input(type="submit", value="Go")
+
+//- Appends page-specific JS
+block append javascripts
+    != js('igemMain')
+    != js('queryService')
+
+block content
+    .grid
+        .row
+            .column6 &nbsp;
+            .column6.lastcol.align-right
+                a(href="#") My Cart (6)
+                &nbsp;
+                |User McIGemmer
+        .row.mTop100#contentMain
+            .column6.align-right
+                img(src="http://placehold.it/350x500")
+            .column6.lastcol.mTop100#searchForms
+                +searchForm("Text Search", "form-text-search", "#")
+                +searchForm("1000 Parts Search", "form-thousand-search", "#")
+                +searchForm("Subparts Search", "form-subpart-search", "#")
+                +searchForm("Superparts Search", "form-superpart-search", "#")

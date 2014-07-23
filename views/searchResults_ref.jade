@@ -1,0 +1,220 @@
+!!! 5
+html(lang='en')
+    head
+        meta(charset='UTF-8')
+        title Results for 'awesome'
+        link(href='http://fonts.googleapis.com/css?family=PT+Serif|Open+Sans', rel='stylesheet', type='text/css')
+        link(rel='stylesheet', href='css/gumby/gumby.css')
+        style
+            body{
+            overflow-y: scroll;
+            }
+        script(src='js/jquery-1.9.1.js')
+        script
+            $(function() {
+                $(".part-header").click(function(e) {
+                    e.preventDefault();
+                    var target = $(e.currentTarget);
+                    var part = target.parents("tr").data("part");
+                    var extended = $("tr.partExtended." + part);
+                    var icon = target.find(".resultIcon");
+                    if (extended.css("display") == "none") {
+                        extended.show();
+                        icon.toggleClass("icon-right-open").toggleClass("icon-down-open");
+                    }
+                    else {
+                        extended.hide();
+                        icon.toggleClass("icon-right-open").toggleClass("icon-down-open");
+                    }
+                });
+            });
+    body
+        .row
+            .twelve.columns.text-right
+                a(href='construction.html') My Cart (6)
+                | Martin Hanzel
+        .row
+            h2 search: 'awesome'
+        //- Search info bar
+        .row
+            .six.columns
+                | 4 results, page 1 of 1
+            .six.columns.text-right
+                | Sort by
+                .field.picker
+                    select
+                        option(value='Relevance') Relevance
+                        option(value='Length') Length
+                        option(value='Rating') Rating
+                        option(value='Stars') Stars
+        //- Search results
+        .row
+            table#searchResultsTable
+                //- Sorting columns
+                thead
+                    td
+                        a(href='#')
+                            | Part ID
+                            i.icon-up-dir
+                    td
+                        a(href='#') Type
+                    td
+                        a(href='#') Length
+                    td Assembly
+                    td
+                        a(href='#') Reviews
+                    td
+                //- Part
+                tr(data-part='K12345')
+                    td
+                        a.text-large.part-header(href='#')
+                            i.icon-right-open.resultIcon
+                            | K12345
+                    td
+                        span.promoter.label promoter
+                    td
+                        span 1000 bp
+                    td
+                        span
+                            span.rfc-yes 10
+                            span.rfc-yes 12
+                            span.rfc-yes 21
+                            span.rfc-no 22
+                            span.rfc-no 25
+                            span.rfc-yes 1000
+                    td
+                        span
+                            i.icon-star
+                            | 7
+                            i.icon-heart
+                            | 4.6/5
+                    td.text-right
+                        a.text-large(href='#') add
+                tr.K12345.partExtended
+                    td(colspan='6')
+                        p.description
+                            | This is an awesome part that generates awesomeness wherever it is placed. No genetic network may be awesome without this part.
+                        p.remarks
+                            | Submitted 2012-12-12
+                            br
+                            a.red(href='#') Not available
+                            | -
+                            span.green Works
+                            | -
+                            | 21 uses
+                tr(data-part='K23456')
+                    td
+                        a.text-large.part-header(href='#')
+                            i.icon-right-open.resultIcon
+                            | K23456
+                    td
+                        span.rbs.label rbs
+                    td
+                        span 1000 bp
+                    td
+                        span
+                            span.rfc-yes 10
+                            span.rfc-yes 12
+                            span.rfc-yes 21
+                            span.rfc-no 22
+                            span.rfc-no 25
+                            span.rfc-yes 1000
+                    td
+                        span
+                            i.icon-star
+                            | 7
+                            i.icon-heart
+                            | 4.6/5
+                    td.text-right
+                        a.text-large(href='#') add
+                tr.K23456.partExtended
+                    td(colspan='6')
+                        p.description
+                            | This is an awesome part that generates awesomeness wherever it is placed. No genetic network may be awesome without this part.
+                        p.remarks
+                            | Submitted 2012-12-12
+                            br
+                            a.red(href='#') Not available
+                            | -
+                            span.green Works
+                            | -
+                            | 21 uses
+                tr(data-part='K34567')
+                    td
+                        a.text-large.part-header(href='#')
+                            i.icon-right-open.resultIcon
+                            | K34567
+                    td
+                        span.coding.label coding
+                    td
+                        span 1000 bp
+                    td
+                        span
+                            span.rfc-yes 10
+                            span.rfc-yes 12
+                            span.rfc-yes 21
+                            span.rfc-no 22
+                            span.rfc-no 25
+                            span.rfc-yes 1000
+                    td
+                        span
+                            i.icon-star
+                            | 7
+                            i.icon-heart
+                            | 4.6/5
+                    td.text-right
+                        a.text-large(href='#') add
+                tr.K34567.partExtended
+                    td(colspan='6')
+                        p.description
+                            | This is an awesome part that generates awesomeness wherever it is placed. No genetic network may be awesome without this part.
+                        p.remarks
+                            | Submitted 2012-12-12
+                            br
+                            a.red(href='#') Not available
+                            | -
+                            span.green Works
+                            | -
+                            | 21 uses
+                tr(data-part='K45678')
+                    td
+                        a.text-large.part-header(href='#')
+                            i.icon-right-open.resultIcon
+                            | K45678
+                    td
+                        span.terminator.label terminator
+                    td
+                        span 1000 bp
+                    td
+                        span
+                            span.rfc-yes 10
+                            span.rfc-yes 12
+                            span.rfc-yes 21
+                            span.rfc-no 22
+                            span.rfc-no 25
+                            span.rfc-yes 1000
+                    td
+                        span
+                            i.icon-star
+                            | 7
+                            i.icon-heart
+                            | 4.6/5
+                    td.text-right
+                        a.text-large(href='#') add
+                tr.K45678.partExtended
+                    td(colspan='6')
+                        p.description
+                            | This is an awesome part that generates awesomeness wherever it is placed. No genetic network may be awesome without this part.
+                        p.remarks
+                            | Submitted 2012-12-12
+                            br
+                            a.red(href='#') Not available
+                            | -
+                            span.green Works
+                            | -
+                            | 21 uses
+                //- Important! This row prevents odd layout changes when parts are shown.
+                tr.K45678
+                    td(colspan='6', style='width: 100%; height: 1px; padding: 0px;')
+        #footer
+            | © uOttawa iGEM 2013. This is freaking awesoooooome.
