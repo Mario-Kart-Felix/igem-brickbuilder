@@ -36,18 +36,9 @@ script#templatePrimers(type='text/x-handlebars-template')
 
     //- Info on selected part
     .row(style='border: 1px solid #000000; padding: 10px')
-        h3 Brick Info
+        h3#brick-name Brick Info
         .row
-            p.description
-                | Brick description here
-            p.remarks
-                | Submitted at some time
-                br
-                a.red(href='#') Availabe/Not Available
-                |  - 
-                span.green Works/Doesn't work
-                |  - 
-                | # of uses
+            p#brick-description Brick Description
 
     .row
         | Choose bricks to be used in construct
@@ -57,10 +48,9 @@ script#templatePrimers(type='text/x-handlebars-template')
         .four.columns.text-center
             h3 Brick Bin
             form
-                select(multiple='#', size='7', name='mytextarea')
+                select(multiple='#', size='7')
                     {{#each bricks}}
-                    option(value='{{name}}', name='{{name}}', data-part='{{name}}')
-                        | {{name}}
+                    option(onclick="Bricklayer.showInfo('{{name}}')") {{name}}
                     {{/each}}
 
         //- Buttons to add, remove and rearrange parts in construct
@@ -75,7 +65,7 @@ script#templatePrimers(type='text/x-handlebars-template')
                     li.btn.medium.default
                         input#moveDown(type='button', value='Move Down')
                     li.btn.medium.default
-                        input#addBrick(type='button', value='Add')
+                        input#addBrick(type='button', value='Add', onclick="Bricklayer.addConstruct()")
                     li.btn.medium.default
                         input#deleteBrick(type='button', value='Delete')
 
@@ -83,5 +73,5 @@ script#templatePrimers(type='text/x-handlebars-template')
         .four.columns.text-center
             h3 Construct Bin
             form
-                select(multiple='#', size='7', name='mytextarea')
+                select#constructBin(multiple='#', size='7', name='mytextarea')
         

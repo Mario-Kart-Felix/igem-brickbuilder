@@ -7184,6 +7184,7 @@ table.rounded > tbody:first-child tr:first-child td {
   -ms-border-radius: 4px;
   -o-border-radius: 4px;
   border-radius: 4px;
+  margin: 2px;
 }
 
 .rfc a:hover {

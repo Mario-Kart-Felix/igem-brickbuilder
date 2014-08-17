@@ -185,3 +185,31 @@ displayPrimers = (primers) ->
 
 # console.log getPrimersForConstruct construct, minTemp, maxTemp
 # #######
+
+# --------------------------------------------------------------------------
+
+focusedRef = "" # Brick ref
+focusedBrick = "" # Brick clicked upon list
+
+Bricklayer.showInfo = (brickRef) ->
+
+    focusedRef = brickRef
+    if typeof brickRef == "string"
+        focusedBrick = Bricklayer.bin.bricks[Bricklayer.bin.indexOf(brickRef)]
+    else
+        focusedBrick = Bricklayer.bin.construct[brickRef]
+
+    $('#brick-name').text(focusedBrick.name)
+    $('#brick-description').text(focusedBrick.description)
+
+Bricklayer.addConstruct = ->
+    if focusedBrick != "" && typeof focusedRef != "number"
+        Bricklayer.bin.construct.push focusedBrick
+        i = Bricklayer.bin.construct.length-1
+        $('#constructBin').append("<option id='construct-' + #{i}, onclick=Bricklayer.showInfo(#{i})>#{focusedBrick.name}</option>")
+
+Bricklayer.deleteConstruct = ->
+    if typeof focusedRef == "number"
+        alert "Attempting to delete"
+        $('construct-' + focusedRef).remove()
+        # Bricklayer.bin.construct.splice(focusedRef,1)

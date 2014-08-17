@@ -4,6 +4,7 @@ Bricklayer.BrickBin =
 class BrickBin
     constructor: ->
         @bricks = new Array()
+        @construct = new Array()
 
     addBrick: (brickName, link) ->
         if this.indexOf(brickName) != -1
