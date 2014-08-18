@@ -67,11 +67,13 @@ script#templatePrimers(type='text/x-handlebars-template')
                     li.btn.medium.default
                         input#addBrick(type='button', value='Add', onclick="Bricklayer.addConstruct()")
                     li.btn.medium.default
-                        input#deleteBrick(type='button', value='Delete')
+                        input#deleteBrick(type='button', value='Delete', onclick="Bricklayer.deleteConstruct()")
 
         //- List of parts to be built in construct
         .four.columns.text-center
             h3 Construct Bin
             form
-                select#constructBin(multiple='#', size='7', name='mytextarea')
-        
+                select#constructBin(multiple='#', size='7')
+                    {{#each construct}}
+                    option(id='construct-{{@index}}', onclick="Bricklayer.showInfo({{@index}})") {{name}}
+                    {{/each}}

@@ -192,7 +192,6 @@ focusedRef = "" # Brick ref
 focusedBrick = "" # Brick clicked upon list
 
 Bricklayer.showInfo = (brickRef) ->
-
     focusedRef = brickRef
     if typeof brickRef == "string"
         focusedBrick = Bricklayer.bin.bricks[Bricklayer.bin.indexOf(brickRef)]
@@ -206,10 +205,9 @@ Bricklayer.addConstruct = ->
     if focusedBrick != "" && typeof focusedRef != "number"
         Bricklayer.bin.construct.push focusedBrick
         i = Bricklayer.bin.construct.length-1
-        $('#constructBin').append("<option id='construct-' + #{i}, onclick=Bricklayer.showInfo(#{i})>#{focusedBrick.name}</option>")
+        $('#constructBin').append("<option id='construct-#{i}', onclick=Bricklayer.showInfo(#{i})>#{focusedBrick.name}</option>")
 
 Bricklayer.deleteConstruct = ->
     if typeof focusedRef == "number"
-        alert "Attempting to delete"
-        $('construct-' + focusedRef).remove()
-        # Bricklayer.bin.construct.splice(focusedRef,1)
+        $('#construct-' + focusedRef).remove()
+        Bricklayer.bin.construct.splice(focusedRef,1)
