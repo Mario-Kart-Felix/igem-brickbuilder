@@ -7172,8 +7172,8 @@ table.rounded > tbody:first-child tr:first-child td {
 }
 
 /* line 6, ../../sass/gumby/ui/_buttons.scss */
-.btn.rfc {
-  background: #f6b83f;
+.btn.rfc, .btn.rfc:active {
+  background: #b4b4b4;
   border: 1px solid #000000;
   font-size: 16px;
   font-size: 1rem;
@@ -7185,30 +7185,32 @@ table.rounded > tbody:first-child tr:first-child td {
   -o-border-radius: 4px;
   border-radius: 4px;
   margin: 2px;
+  color: #ffffff;
 }
 
-.rfc a:hover {
+.rfc:hover {
+  background: #c8c8c8;
+}
+
+.rfc a:hover , #selected > a{
   color: #dc5b3e;
 }
 
-.rfc.disabled {
-  background: #919191;
-}
-
-.rfc.enabled {
-  background: #f6b83f;
+#disabled, #disabled > a, #disabled > a:hover, #disabled:hover {
+  color: #b4b4b4;
+  background: #b4b4b4;
 }
 
 .rfc.enabled:hover {
-  background: #f7c665;
+  background: #c8c8c8;
 }
 
 .rfc.enabled:active {
-  background: #dda538;
+  background: #b4b4b4;
 }
 
-.rfc.selected {
-  background: #99cc99;
+#selected, #selected:hover {
+  background: #f6b83f;
 }
 
 .brickInfo {

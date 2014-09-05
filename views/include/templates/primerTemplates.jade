@@ -8,28 +8,19 @@ script#templatePrimers(type='text/x-handlebars-template')
     //- Buttons to select RFC
     .row
         .six.columns.text-left
-            | RFC
-            | 
-            .btn.rfc.selected
-                a(href='#')
-                    | 10
-            | 
-            .btn.rfc.enabled
-                a(href='#')
-                    | 12
-            | 
-            .btn.rfc.enabled
-                a(href='#')
-                    | 21
-            | 
-            .btn.rfc.enabled
-                a(href='#')
-                    | 23
-            | 
-            .btn.rfc.enabled
-                a(href='#')
-                    | 25
-            | 
+            {{#each bricks}}
+            
+            .btn.rfc#selected
+                a(href='#') 10
+            .btn.rfc
+                a(onclick=('Bricklayer.selectRFC()')) 12
+            .btn.rfc
+                a(href='#') 21
+            .btn.rfc
+                a(href='#') 23
+            .btn.rfc#disabled
+                a(href='#') 25
+
         .six.columns.text-right
             a(href='#')
                 | Click here to generate primer
@@ -47,8 +38,8 @@ script#templatePrimers(type='text/x-handlebars-template')
         //- List of parts in brickbin
         .four.columns.text-center
             h3 Brick Bin
-            form
-                select(multiple='#', size='7')
+            form#brickBin
+                select(size='7')
                     {{#each bricks}}
                     option(onclick="Bricklayer.showInfo('{{name}}')") {{name}}
                     {{/each}}
@@ -61,19 +52,21 @@ script#templatePrimers(type='text/x-handlebars-template')
             .row
                 ul.tiles.two_up
                     li.btn.medium.default
-                        input#moveUp(type='button', value='Move Up')
+                        input(type='button', value='Move Up', onclick="Bricklayer.moveUp()")
                     li.btn.medium.default
-                        input#moveDown(type='button', value='Move Down')
+                        input(type='button', value='Move Down', onclick="Bricklayer.moveDown()")
                     li.btn.medium.default
-                        input#addBrick(type='button', value='Add', onclick="Bricklayer.addConstruct()")
+                        input(type='button', value='Add', onclick="Bricklayer.addConstruct()")
                     li.btn.medium.default
-                        input#deleteBrick(type='button', value='Delete', onclick="Bricklayer.deleteConstruct()")
+                        input(type='button', value='Delete', onclick="Bricklayer.deleteConstruct()")
+                li.btn.medium.default
+                    input(type='button', value='Delete Construct', onclick="Bricklayer.deleteAll()")
 
         //- List of parts to be built in construct
         .four.columns.text-center
             h3 Construct Bin
-            form
-                select#constructBin(multiple='#', size='7')
+            form#constructBin
+                select(size='7')
                     {{#each construct}}
                     option(id='construct-{{@index}}', onclick="Bricklayer.showInfo({{@index}})") {{name}}
                     {{/each}}

@@ -205,9 +205,55 @@ Bricklayer.addConstruct = ->
     if focusedBrick != "" && typeof focusedRef != "number"
         Bricklayer.bin.construct.push focusedBrick
         i = Bricklayer.bin.construct.length-1
-        $('#constructBin').append("<option id='construct-#{i}', onclick=Bricklayer.showInfo(#{i})>#{focusedBrick.name}</option>")
+        $('#constructBin select').append("<option id='construct-#{i}' onclick=Bricklayer.showInfo(#{i})>#{focusedBrick.name}</option>")
 
 Bricklayer.deleteConstruct = ->
     if typeof focusedRef == "number"
         $('#construct-' + focusedRef).remove()
         Bricklayer.bin.construct.splice(focusedRef,1)
+
+Bricklayer.deleteAll = ->
+    Bricklayer.bin.construct = new Array()
+    $('#constructBin select').empty()
+
+Bricklayer.moveDown = ->
+    lastElem = Bricklayer.bin.construct.length-1
+    if typeof focusedRef == "number" && focusedRef != lastElem
+
+        # Defining variables for clarity of part
+        indexBelow = focusedRef+1
+        partBelow = Bricklayer.bin.construct[indexBelow]
+
+        # Since a copy of the focused part has already been made, assign new part to current selected index
+        Bricklayer.bin.construct[focusedRef] = partBelow
+        Bricklayer.bin.construct[indexBelow] = focusedBrick
+
+        # Change name of option elems to its correspondent
+        $('#construct-' + focusedRef).text("#{partBelow.name}")
+        $('#construct-' + indexBelow).text("#{focusedBrick.name}")
+
+        # Change selected element to index below, maintaining focus on previous selected part
+        $('#construct-' + focusedRef).removeAttr("selected")
+        $('#construct-' + indexBelow).attr("selected","")
+        focusedRef = indexBelow
+
+Bricklayer.moveUp = ->
+    if typeof focusedRef == "number" && focusedRef != 0
+
+        # Defining variables for clarity of part
+        indexAbove = focusedRef-1
+        partAbove = Bricklayer.bin.construct[indexAbove]
+
+        # Since a copy of the focused part has already been made, assign new part to current selected index
+        Bricklayer.bin.construct[indexAbove] = focusedBrick
+        Bricklayer.bin.construct[focusedRef] = partAbove
+
+        # Change name of option elems to its correspondent
+        $('#construct-' + indexAbove).text("#{focusedBrick.name}")
+        $('#construct-' + focusedRef).text("#{partAbove.name}")
+
+        # Change selected element to index above, maintaining focus on previous selected part
+        $('#construct-' + focusedRef).removeAttr("selected")
+        $('#construct-' + indexAbove).attr("selected","")
+        focusedRef = indexAbove
+
