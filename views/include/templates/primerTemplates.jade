@@ -8,21 +8,19 @@ script#templatePrimers(type='text/x-handlebars-template')
     //- Buttons to select RFC
     .row
         .six.columns.text-left
-            {{#each bricks}}
-            
             .btn.rfc#selected
                 a(href='#') 10
-            .btn.rfc
-                a(onclick=('Bricklayer.selectRFC()')) 12
-            .btn.rfc
+            .btn.rfc#disabled
+                a(href='#') 12
+            .btn.rfc#disabled
                 a(href='#') 21
-            .btn.rfc
+            .btn.rfc#disabled
                 a(href='#') 23
             .btn.rfc#disabled
                 a(href='#') 25
 
         .six.columns.text-right
-            a(href='#')
+            a(href='#', onclick="Bricklayer.primeItUp()")
                 | Click here to generate primer
 
     //- Info on selected part

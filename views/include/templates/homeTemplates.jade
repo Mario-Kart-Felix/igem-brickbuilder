@@ -21,3 +21,8 @@ script#templateSearchFields(type='text/x-handlebars-template')
             +searchForm("Subparts Search", "form-subpart-search", "#")
             p Search for parts that contain these parts.
             +searchForm("Superparts Search", "form-superpart-search", "#")
+            p Enter an individual part
+            .append.field
+                input.wide.input#brickName(type='text', placeholder='Brick Name')
+                .medium.primary.btn(onclick="Bricklayer.manualAdd()")
+                    input(type='submit', value='Add') Add

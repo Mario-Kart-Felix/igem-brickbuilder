@@ -88,6 +88,14 @@ class BrickBin
             this.addBrick(part)
 
 
+Bricklayer.manualAdd = ->
+    # Store part name
+    partName = $('#brickName').val()
+
+    # Add part
+    Bricklayer.bin.addBrick(partName)
+    Bricklayer.BinView.render(Bricklayer.bin)
+
 # Run at startup
 Bricklayer.bin = new Bricklayer.BrickBin();
 Bricklayer.bin.load()

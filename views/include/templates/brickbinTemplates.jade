@@ -1,11 +1,9 @@
 script#templateBrickBin(type='text/x-handlebars-template')
     .row
         h2 Your Brick Bin
+    br
     //- Search info bar
     {{#if bricks.length}}
-    .row
-        h1
-
     .row
         .six.columns
             | {{bricks.length}} bricks in the bin

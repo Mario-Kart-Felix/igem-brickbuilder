@@ -257,3 +257,9 @@ Bricklayer.moveUp = ->
         $('#construct-' + indexAbove).attr("selected","")
         focusedRef = indexAbove
 
+Bricklayer.primeItUp = ->
+    readyForPrime = []
+    for brick in Bricklayer.bin.construct
+        readyForPrime.push brick.sequence.toUpperCase()
+    primers = getPrimersForConstruct readyForPrime, 50, 60
+    displayPrimers primers
