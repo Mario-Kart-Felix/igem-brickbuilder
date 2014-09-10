@@ -3,11 +3,13 @@ script#templatePrimers(type='text/x-handlebars-template')
         .six.columns
             h2 Generate Primers
             span
+            //
                 | Choose available RFC
 
     //- Buttons to select RFC
     .row
         .six.columns.text-left
+        //
             .btn.rfc#selected
                 a(href='#') 10
             .btn.rfc#disabled
@@ -30,7 +32,7 @@ script#templatePrimers(type='text/x-handlebars-template')
             p#brick-description Brick Description
 
     .row
-        | Choose bricks to be used in construct
+        | Choose bricks for construct
 
     .row
         //- List of parts in brickbin
@@ -46,7 +48,6 @@ script#templatePrimers(type='text/x-handlebars-template')
         .four.columns.text-center
             .row
                 h1 // Just empty space
-                h1
             .row
                 ul.tiles.two_up
                     li.btn.medium.default
@@ -68,3 +69,8 @@ script#templatePrimers(type='text/x-handlebars-template')
                     {{#each construct}}
                     option(id='construct-{{@index}}', onclick="Bricklayer.showInfo({{@index}})") {{name}}
                     {{/each}}
+
+    //- Display primers
+    .row#displayPrimers(style='border-top: 1px solid #000000')
+        h3 Primers
+        br

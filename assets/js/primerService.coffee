@@ -102,20 +102,23 @@ Bricklayer.Primers.getPrimersForConstruct =
 getPrimersForConstruct = (construct, minTemp, maxTemp) ->
     primers = []
     for sequence, i in construct
-        leftPart = sequence
-        rightPart = construct[i + 1]
+        mainPart = sequence
 
-        # get a regular forward primer for the first part
-        if i is 0
+        # get a regular forward primer
+        # for only the first part
+        if i is 0 
             length = getLengthOfSubsequenceByTemp sequence, minTemp, maxTemp
             primers.push sequence.substring(0, length)
 
-        if rightPart
-            primers.push getPrimerBetween(leftPart, rightPart, minTemp, maxTemp)
-        else if not rightPart # get a reverse complement primer for the last part
-            endingSequence = getComplement reverse(leftPart)
-            length = getLengthOfSubsequenceByTemp endingSequence, minTemp, maxTemp
-            primers.push endingSequence.substring(0, length)
+        # for the rest of the parts
+        else
+            prevPart = construct[i-1]
+            primers.push getPrimerBetween(prevPart, mainPart, minTemp, maxTemp)
+
+        # get reverse primer
+        endingSequence = getComplement reverse(mainPart)
+        length = getLengthOfSubsequenceByTemp endingSequence, minTemp, maxTemp
+        primers.push endingSequence.substring(0, length)
     primers
 
 Bricklayer.SequenceEntryView =
@@ -126,34 +129,25 @@ addSequence = (context) ->
 
 displayPrimers = (primers) ->
     console.log "Displaying primers..."
-    console.log primers
+
+    # Getting rid of previous primers
+    $('#displayPrimers').empty()
+    $('#displayPrimers').append("<h3>Primers</h3><br>")
+
+    p = -1
     for primer, i in primers
-        if i is 0
-            s = '<p>Regular Forward Primer: ' + primers[0] + '</p>'
-        else if i is (primers.length - 1)
-            s = '<p>Regular Reverse Complement Primer: ' + primers[i] + '</p>'
+        if i%2 == 0
+            p++
+
+            # Display Brick name
+            $('#displayPrimers').append("#{Bricklayer.bin.construct[p].name}<br>")
+
+            # Display forward primer
+            $('#displayPrimers').append("fp: #{primer}<br>")
+
         else
-            s = '<p>Linker Primer between parts ' + i + ' and ' + (i+1) + ': ' + primers[i] + '</p>'
-        console.log s
-        $(Bricklayer.SequenceEntryView.selector).append(s)
-
-    for primer, i in primers
-        console.log i + ", " + primer
-
-# Add a blank sequence
-###
-    Bricklayer.PrimerView.afterRender = ->
-        addSequence {}
-        $('#addSequence').click (e) ->
-            addSequence {}
-        $('#generatePrimers').click (e) ->
-            construct = []
-            textareas = $(SequenceEntryView.selector + ' textarea').each (i, element) ->
-                construct.push $(element).val().toUpperCase()
-
-            primers = getPrimersForConstruct construct, 50, 60
-            displayPrimers primers
-###
+            # Display reverse primer
+            $('#displayPrimers').append("rp: #{primer}<br><br>")
 
 # temporarily skip the home page and go to the generate page. this is a reason for routes
 # Bricklayer.PrimerView.render()
