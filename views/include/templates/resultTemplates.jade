@@ -28,15 +28,17 @@ script#templateResultsRow(type='text/x-handlebars-template')
     tr.partExtended(class='toggle-{{name}}')
         td(colspan='6')
             p.description
-                | {{description}}
+                | Description: {{description}}
             p.remarks
-                | Submitted {{dateEntered}}
+                | Availability: 
+                a.red(href='{{partUrl}}') {{availability}}
                 br
-                a.red(href='{{partUrl}}') {{availablility}}
-                | -
-                span.green {{works}}
-                | -
-                | {{numUses}} uses
+                | Submitted: {{dateEntered}}
+                //br
+                //| -
+                //span.green {{works}}
+                //| -
+                //| {{numUses}} uses
 
 script#templateSearchResults(type='text/x-handlebars-template')
     .row
@@ -50,15 +52,27 @@ script#templateSearchResults(type='text/x-handlebars-template')
         table#searchResultsTable
             //- Sorting columns
             thead
-                td(style='width: 20%;') Part ID
+                td(style='width: 25%;') Part ID
                 td(style='width: 20%;') Type
-                td(style='width: 15%;') Length (bp)
-                td(style='width: 20%;').nosort Assembly
-                td(style='width: 15%;').nosort Reviews
-                td(style='width: 10%;').nosort
+                td(style='width: 15%;') Length
+                td(style='width: 20%;') Assembly
+                td(style='width: 15%;') Reviews
+                td(style='width: 5%;')
             //- Part
             tbody#results
             //- Important! This row prevents odd layout changes when parts are shown.
             tfoot
                 tr
                     td(colspan='6', style='width: 100%; height: 1px; padding: 0px;')
+    .row
+        div.text-center
+            {{#if prevOffset}}
+            div(class='medium btn pill-left info')
+                a(href='#', onclick="Bricklayer.paginateTable({{prevOffset}})") 
+                    i.icon-left-bold
+            {{/if}}
+            {{#if nextOffset}}
+            div(class='medium btn pill-right info')
+                a(href='#', onclick="Bricklayer.paginateTable({{nextOffset}})") 
+                    i.icon-right-bold
+            {{/if}}

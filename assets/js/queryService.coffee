@@ -4,6 +4,8 @@
 # from the node server.
 
 brickUrl = 'api/v1/brick/'
+brickNames = []
+max = 10
 
 # a map of form ids to search URLS
 searches =
@@ -63,31 +65,27 @@ Bricklayer.search = (url, searchTerms) ->
         success: (data) ->
             # The data here is an array of biobrick names
             console.log "Parts list received from server\n #{data}.\n Displaying..."
-            displayBricks data
+            displayBricks data, 0
+            brickNames = data
         error: (error) ->
             console.log error
 
 Bricklayer.BrickRowResultView =
 BrickRowResultView = new Bricklayer.AppendView '#results', '#templateResultsRow'
 
-# Step 1: Start rendering of a table
-# Step 2: Fetch full information for each brick, one by one
-displayBricks = (brickList) ->
+# Display bricks using pagination
+displayBricks = (brickList, offset) ->
+
+    offsetList = brickList[offset..(offset + (max - 1))]
 
     Bricklayer.ResultsView.render {
         searchTerm: "'" + Bricklayer.lastSearchTerm + "'" # ugly way to get quotes to show up
         numResults: brickList.length
+        prevOffset: if offset > 0 then "#{offset - max}" else false
+        nextOffset: if (offset + max) < brickList.length then (offset + max) else false
     }
 
-    
-    table = $('#searchResultsTable').dataTable(
-                "autoWidth": false,
-                "searching": false,
-                "columnDefs": ["targets": 'nosort', "orderable": false]
-            ).DataTable()
-    
-
-    for brick in brickList
+    for brick in offsetList
         $.ajax
             type: "GET"
             url: brickUrl + brick
@@ -95,47 +93,28 @@ displayBricks = (brickList) ->
                 (data) ->
                     brick = new BioBrick data
                     brick.inBin = (Bricklayer.bin.indexOf(brick.name) != -1)
-                    addRow brick, table
+                    addRow brick                    
+                    BrickRowResultView.render brick
             error: (error) ->
                 console.log error
 
-# DataTable add row with style
-addRow = (brick, table) ->
+# Attach click handler for drop down
+addRow = (brick) ->
 
-    # Initialize row data with style
-    nameCell        = "<a class='extend part-header toggle-#{brick.name}' style='cursor:pointer'>
-                        <i class='icon-right-open resultIcon'></i>#{brick.name}"
-    typeCell        = "<span class='label #{brick.type}'>#{brick.type}"
-    lengthCell      = "<span>#{brick.length}"
-    assemblyCell    = "<span>"
-    buttonCell      = "<a style='cursor:pointer' id='toggle-bin-#{brick.name}' class='text-large'"
-    reviewsCell     = "<span><i class='icon-star'></i><i class='icon-heart'> /5</i>"
-    
-    childRow = "<p class='description'>| #{brick.description}</p>
-                <p class='remarks'>| Submitted #{brick.dateEntered}</p>
-                <a href='#{brick.partUrl}'>#{brick.availability}</a>"
+    BrickRowResultView.afterRender = ->
+        $('a.toggle-' + brick.name).click (e) ->
+            e.preventDefault()
+            target = $(e.currentTarget)
+            part = target.parents("tr").data "part"
+            extended = $('tr.toggle-' + brick.name)
+            icon = target.find ".resultIcon"
+            if extended.css("display") is "none"
+                extended.show 300
+                icon.toggleClass("icon-right-open").toggleClass "icon-down-open"
+            else
+                extended.hide()
+                icon.toggleClass("icon-right-open").toggleClass "icon-down-open"
 
-    for key, value of brick.compatibility
-        assemblyCell += "<span class='rfc-#{value}'>#{key}</span>"
-
-    if brick.inBin
-        buttonCell += "onclick=\"Bricklayer.bin.removeBrick('#{brick.name}', this)\">remove"
-    else
-        buttonCell += "onclick=\"Bricklayer.bin.addBrick('#{brick.name}', this)\">add"
-
-    # Add data to a new row with child and then draw the table
-    rowNode = table.row.add([nameCell, typeCell, lengthCell, assemblyCell, reviewsCell, buttonCell])
-                       .child(childRow).hide().draw(false).nodes().toJQuery()
-    rowNode.on 'click', 'a.extend', (e) ->
-                        tr      = $(e.currentTarget).closest('tr')
-                        icon    = $(e.currentTarget).find ".resultIcon"
-                        row     = table.row(tr)
-
-                        if row.child.isShown()
-                            row.child.hide()
-                            tr.removeClass('shown')
-                            icon.toggleClass("icon-right-open").toggleClass "icon-down-open"
-                        else
-                            row.child.show()
-                            tr.addClass('shown')
-                            icon.toggleClass("icon-right-open").toggleClass "icon-down-open"
+# Render the given offset of brickList
+Bricklayer.paginateTable = (offset) ->
+    displayBricks brickNames, offset
