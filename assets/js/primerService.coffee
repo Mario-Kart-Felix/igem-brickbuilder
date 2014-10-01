@@ -182,8 +182,8 @@ displayPrimers = (primers) ->
 
 # --------------------------------------------------------------------------
 
-focusedRef = "" # Brick ref
-focusedBrick = "" # Brick clicked upon list
+focusedRef = "" # Brick ref. String corresponds to bricks from Brick Bin and number corresponds to bricks from Construct Bin.
+focusedBrick = "" # Brick clicked in bin
 
 Bricklayer.showInfo = (brickRef) ->
     focusedRef = brickRef
@@ -195,11 +195,28 @@ Bricklayer.showInfo = (brickRef) ->
     $('#brick-name').text(focusedBrick.name)
     $('#brick-description').text(focusedBrick.description)
 
+checkRFCs = (bin) ->
+    compatible = [true,true,true,true,true]
+    i=0
+    for rfc in Bricklayer.RFCs
+        for brick in bin
+            if brick.compatibility[rfc] == "no"
+                compatible[i] = false
+                i++
+                break
+            i++
+    console.log compatible[4]
+    return compatible
+
 Bricklayer.addConstruct = ->
     if focusedBrick != "" && typeof focusedRef != "number"
         Bricklayer.bin.construct.push focusedBrick
         i = Bricklayer.bin.construct.length-1
         $('#constructBin select').append("<option id='construct-#{i}' onclick=Bricklayer.showInfo(#{i})>#{focusedBrick.name}</option>")
+        compatibleRFCs = checkRFCs(Bricklayer.bin.construct)
+        for rfc,i in compatibleRFCs
+            if !rfc
+                $('#RFC' + Bricklayer.RFCs[i]).attr("class", "btn rfc disabled")
 
 Bricklayer.deleteConstruct = ->
     if typeof focusedRef == "number"

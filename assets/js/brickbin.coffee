@@ -92,10 +92,20 @@ Bricklayer.manualAdd = ->
     # Store part name
     partName = $('#brickName').val()
 
-    # Add part
-    Bricklayer.bin.addBrick(partName)
-    Bricklayer.BinView.render(Bricklayer.bin)
+    # Check if already in bin
+    $.ajax
+            type: "GET"
+            url: brickUrl + partName
+            success: (brick) =>
+                newBrick = new Bricklayer.BioBrick brick
+                if Bricklayer.bin.indexOf(newBrick.name) == -1
+                    # Add part
+                    Bricklayer.bin.addBrick(newBrick.name)
+                # Clear entry
+                $('#brickName').val("")
 
+                error:  (error) ->
+                    console.log error
 # Run at startup
 Bricklayer.bin = new Bricklayer.BrickBin();
 Bricklayer.bin.load()

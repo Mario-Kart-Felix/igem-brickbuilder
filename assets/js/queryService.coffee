@@ -42,7 +42,10 @@ class BioBrick
 
         @compatibility = {}
         for RFC in Bricklayer.RFCs
-            @compatibility[RFC] = if Bricklayer.RFCService[RFC].isCompatible @sequence then 'yes' else 'no'
+            if @type == "plasmid_backbone"
+                @compatibility[RFC] = 'yes'
+            else
+                @compatibility[RFC] = if Bricklayer.RFCService[RFC].isCompatible @sequence then 'yes' else 'no'
 
     getContent: (tagName) ->
         @xml.find(tagName).contents()[0]?.data

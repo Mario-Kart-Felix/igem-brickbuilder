@@ -7196,20 +7196,12 @@ table.rounded > tbody:first-child tr:first-child td {
   color: #dc5b3e;
 }
 
-#disabled, #disabled > a, #disabled > a:hover, #disabled:hover {
+.rfc.disabled, .rfc.disabled > a, .rfc.disabled > a:hover, .rfc.disabled:hover {
   color: #b4b4b4;
   background: #b4b4b4;
 }
 
-.rfc.enabled:hover {
-  background: #c8c8c8;
-}
-
-.rfc.enabled:active {
-  background: #b4b4b4;
-}
-
-#selected, #selected:hover {
+.rfc.selected, .rfc.selected:hover {
   background: #f6b83f;
 }
 

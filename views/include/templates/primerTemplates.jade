@@ -9,27 +9,26 @@ script#templatePrimers(type='text/x-handlebars-template')
     //- Buttons to select RFC
     .row
         .six.columns.text-left
-        //
-            .btn.rfc#selected
+            .btn.rfc#RFC10
                 a(href='#') 10
-            .btn.rfc#disabled
+            .btn.rfc#RFC12
                 a(href='#') 12
-            .btn.rfc#disabled
+            .btn.rfc#RFC21
                 a(href='#') 21
-            .btn.rfc#disabled
+            .btn.rfc#RFC23
                 a(href='#') 23
-            .btn.rfc#disabled
+            .btn.rfc#RFC25
                 a(href='#') 25
 
         .six.columns.text-right
-            a(href='#', onclick="Bricklayer.primeItUp()")
+            a(href='#displayPrimers', onclick="Bricklayer.primeItUp()")
                 | Click here to generate primer
 
     //- Info on selected part
     .row(style='border: 1px solid #000000; padding: 10px')
         h3#brick-name Brick Info
-        .row
-            p#brick-description Brick Description
+        br
+        p#brick-description Brick Description
 
     .row
         | Choose bricks for construct
