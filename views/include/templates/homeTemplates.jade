@@ -6,11 +6,12 @@
 
 //- Defines a reusable search form.
 mixin searchForm(title, id, action, toolTip)
-    form(id='#{id}', action='#{action}')
-        .append.field
-            input.wide.text.input(type='text', placeholder='#{title}', title='#{toolTip}')
-            .medium.primary.btn
-                input(type='submit', value='Go')
+    div(class="ttip", data-tooltip = "#{toolTip}")
+        form(id='#{id}', action='#{action}')
+            .append.field	    
+                input.wide.text.input(type='text', placeholder='#{title}', title='#{toolTip}' )            
+                .medium.primary.btn
+                    input(type='submit', value='Go')
 
 script#templateSearchFields(type='text/x-handlebars-template')
     .row
