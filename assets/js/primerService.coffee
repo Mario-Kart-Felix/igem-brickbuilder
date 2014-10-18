@@ -102,23 +102,30 @@ Bricklayer.Primers.getPrimersForConstruct =
 getPrimersForConstruct = (construct, minTemp, maxTemp) ->
     primers = []
     for sequence, i in construct
-        mainPart = sequence
+        if sequence != null
+            mainPart = sequence
 
-        # get a regular forward primer
-        # for only the first part
-        if i is 0 
-            length = getLengthOfSubsequenceByTemp sequence, minTemp, maxTemp
-            primers.push sequence.substring(0, length)
+            # get a regular forward primer
+            # for only the first part
+            if i is 0 
+                length = getLengthOfSubsequenceByTemp sequence, minTemp, maxTemp
+                primers.push sequence.substring(0, length)
 
-        # for the rest of the parts
+            # for the rest of the parts
+            else
+                prevPart = construct[i-1]
+                primers.push getPrimerBetween(prevPart, mainPart, minTemp, maxTemp)
+
+            # get reverse primer
+            endingSequence = getComplement reverse(mainPart)
+            length = getLengthOfSubsequenceByTemp endingSequence, minTemp, maxTemp
+            primers.push endingSequence.substring(0, length)
+
+        # Push 2 null elems to fill for convenience
         else
-            prevPart = construct[i-1]
-            primers.push getPrimerBetween(prevPart, mainPart, minTemp, maxTemp)
+            primers.push null
+            primers.push null
 
-        # get reverse primer
-        endingSequence = getComplement reverse(mainPart)
-        length = getLengthOfSubsequenceByTemp endingSequence, minTemp, maxTemp
-        primers.push endingSequence.substring(0, length)
     primers
 
 Bricklayer.SequenceEntryView =
@@ -134,20 +141,20 @@ displayPrimers = (primers) ->
     $('#displayPrimers').empty()
     $('#displayPrimers').append("<h3>Primers</h3><br>")
 
-    p = -1
     for primer, i in primers
-        if i%2 == 0
-            p++
+        if primer != null
 
-            # Display Brick name
-            $('#displayPrimers').append("#{Bricklayer.bin.construct[p].name}<br>")
+            if i%2 == 0
 
-            # Display forward primer
-            $('#displayPrimers').append("fp: #{primer}<br>")
+                # Display Brick name
+                $('#displayPrimers').append("#{Bricklayer.bin.construct[i/2].name}<br>")
 
-        else
-            # Display reverse primer
-            $('#displayPrimers').append("rp: #{primer}<br><br>")
+                # Display forward primer
+                $('#displayPrimers').append("fp: #{primer}<br>")
+
+            else
+                # Display reverse primer
+                $('#displayPrimers').append("rp: #{primer}<br><br>")
 
 # temporarily skip the home page and go to the generate page. this is a reason for routes
 # Bricklayer.PrimerView.render()
@@ -195,33 +202,19 @@ Bricklayer.showInfo = (brickRef) ->
     $('#brick-name').text(focusedBrick.name)
     $('#brick-description').text(focusedBrick.description)
 
-checkRFCs = (bin) ->
-    compatible = [true,true,true,true,true]
-    i=0
-    for rfc in Bricklayer.RFCs
-        for brick in bin
-            if brick.compatibility[rfc] == "no"
-                compatible[i] = false
-                i++
-                break
-            i++
-    console.log compatible[4]
-    return compatible
+constructCount = 0
 
 Bricklayer.addConstruct = ->
     if focusedBrick != "" && typeof focusedRef != "number"
         Bricklayer.bin.construct.push focusedBrick
-        i = Bricklayer.bin.construct.length-1
+        i = constructCount
         $('#constructBin select').append("<option id='construct-#{i}' onclick=Bricklayer.showInfo(#{i})>#{focusedBrick.name}</option>")
-        compatibleRFCs = checkRFCs(Bricklayer.bin.construct)
-        for rfc,i in compatibleRFCs
-            if !rfc
-                $('#RFC' + Bricklayer.RFCs[i]).attr("class", "btn rfc disabled")
+        constructCount++
 
 Bricklayer.deleteConstruct = ->
     if typeof focusedRef == "number"
         $('#construct-' + focusedRef).remove()
-        Bricklayer.bin.construct.splice(focusedRef,1)
+        Bricklayer.bin.construct[focusedRef] = null
 
 Bricklayer.deleteAll = ->
     Bricklayer.bin.construct = new Array()
@@ -231,8 +224,11 @@ Bricklayer.moveDown = ->
     lastElem = Bricklayer.bin.construct.length-1
     if typeof focusedRef == "number" && focusedRef != lastElem
 
-        # Defining variables for clarity of part
-        indexBelow = focusedRef+1
+        # Defining variables for clarity of parts
+        for i in [focusedRef+1..Bricklayer.bin.construct.length] by 1
+            if Bricklayer.bin.construct[i] != null
+                indexBelow = i
+                break
         partBelow = Bricklayer.bin.construct[indexBelow]
 
         # Since a copy of the focused part has already been made, assign new part to current selected index
@@ -252,7 +248,10 @@ Bricklayer.moveUp = ->
     if typeof focusedRef == "number" && focusedRef != 0
 
         # Defining variables for clarity of part
-        indexAbove = focusedRef-1
+        for i in [focusedRef-1..0] by -1
+            if Bricklayer.bin.construct[i] != null
+                indexAbove = i
+                break
         partAbove = Bricklayer.bin.construct[indexAbove]
 
         # Since a copy of the focused part has already been made, assign new part to current selected index
@@ -271,6 +270,9 @@ Bricklayer.moveUp = ->
 Bricklayer.primeItUp = ->
     readyForPrime = []
     for brick in Bricklayer.bin.construct
-        readyForPrime.push brick.sequence.toUpperCase()
+        if brick != null
+            readyForPrime.push brick.sequence.toUpperCase()
+        else
+            readyForPrime.push null
     primers = getPrimersForConstruct readyForPrime, 50, 60
     displayPrimers primers
