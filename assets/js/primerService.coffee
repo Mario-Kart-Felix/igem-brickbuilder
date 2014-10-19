@@ -25,6 +25,10 @@ Bricklayer.Primers = {}
 
 reverse = (s) -> s.split("").reverse().join("")
 
+# List of Forward Primers for RFC Methods 10, 12, 21, 23, 25
+rfcTenFp = ""
+rfcTenRp = "CTGCAGCGGCCGCTACTAGTA"
+
 # Figures out the primer needed to combine two DNA parts
 # The primer is a sequence that has the ending of partA and the beginning of partB.
 # The first part of the primer (the head) is made from the end of the sequence from partA.
@@ -32,6 +36,17 @@ reverse = (s) -> s.split("").reverse().join("")
 # Each part of the primer, the head and tail, needs to have a melting temperature in the range of 50-60 degrees celsius.
 # The ideal temperature is the midpoint, so we want primers with a melting temperature of 55 degrees celsius.
 # The melting temperature of the primer changes as you make the primer longer.
+
+Bricklayer.Primers.getPrimer =
+getPrimer = (part, minTemp=50, maxTemp=60) ->
+    # Using RFC Method 10 for now...
+    # Measure melting temperature starting from beginning of part
+    # Then return forward primer appended with subsequence of part
+    lengthOfPrimerPart = getLengthOfSubsequenceByTemp part, minTemp, maxTemp
+    primerPart = part.substring(part.length - lengthOfPrimerPart)
+    return rfcTenFp + primerPart
+
+###
 Bricklayer.Primers.getPrimerBetween =
 getPrimerBetween = (partA, partB, minTemp=50, maxTemp=60) ->
     # The head of the primer is the ending of partA.
@@ -41,6 +56,7 @@ getPrimerBetween = (partA, partB, minTemp=50, maxTemp=60) ->
     primerHead = partA.substring(partA.length - lengthOfPrimerHead)
     primerTail = partB.substring(0, lengthOfPrimerTail)
     return primerHead + primerTail
+###
 
 # Takes a sequence and returns the length of a subsequence, starting from the beginning,
 # whose melting temperature is closest to the midpoint of the minimum and maximum given melting temperatures.
@@ -98,28 +114,23 @@ getMeltingTemperature = (sequence) ->
     nucleotides = getNucleotideCounts sequence
     return (64.9 + (41 * (nucleotides.G + nucleotides.C - 16.4) / sequence.length))
 
+
+
 Bricklayer.Primers.getPrimersForConstruct =
 getPrimersForConstruct = (construct, minTemp, maxTemp) ->
     primers = []
     for sequence, i in construct
         if sequence != null
-            mainPart = sequence
 
-            # get a regular forward primer
-            # for only the first part
-            if i is 0 
-                length = getLengthOfSubsequenceByTemp sequence, minTemp, maxTemp
-                primers.push sequence.substring(0, length)
-
-            # for the rest of the parts
-            else
-                prevPart = construct[i-1]
-                primers.push getPrimerBetween(prevPart, mainPart, minTemp, maxTemp)
+            # get forward primer
+            length = getLengthOfSubsequenceByTemp sequence, minTemp, maxTemp
+            checkForCoding(sequence)
+            primers.push rfcTenFp + sequence.substring(0, length)
 
             # get reverse primer
-            endingSequence = getComplement reverse(mainPart)
+            endingSequence = getComplement reverse(sequence)
             length = getLengthOfSubsequenceByTemp endingSequence, minTemp, maxTemp
-            primers.push endingSequence.substring(0, length)
+            primers.push rfcTenRp + endingSequence.substring(0, length)
 
         # Push 2 null elems to fill for convenience
         else
@@ -127,6 +138,16 @@ getPrimersForConstruct = (construct, minTemp, maxTemp) ->
             primers.push null
 
     primers
+
+
+# For RFC Method 10,
+# Forward primers differ for coding and non-coding parts
+# Mainly if sequence starts with ATG
+checkForCoding = (sequence) ->
+    if sequence.slice(0,3) == "ATG"
+        rfcTenFp = "GAATTCGCGGCCGCTTCTAG"
+    else
+        rfcTenFp = "GAATTCGCGGCCGCTTCTAGAG"
 
 Bricklayer.SequenceEntryView =
 SequenceEntryView = new Bricklayer.AppendView '#sequenceEntries', '#templateSequenceEntry'
@@ -274,5 +295,10 @@ Bricklayer.primeItUp = ->
             readyForPrime.push brick.sequence.toUpperCase()
         else
             readyForPrime.push null
-    primers = getPrimersForConstruct readyForPrime, 50, 60
+    primers = getPrimersForConstruct readyForPrime, 55, 60
     displayPrimers primers
+
+Bricklayer.rfcTen = (option) ->
+    rfcTenFp = switch
+        when option == "nonCoding" then rfcTenFp = "GAATTCGCGGCCGCTTCTAGAG"
+        when option == "coding" then rfcTenFp = "GAATTCGCGGCCGCTTCTAG"

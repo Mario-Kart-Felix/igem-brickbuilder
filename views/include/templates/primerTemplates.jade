@@ -11,13 +11,13 @@ script#templatePrimers(type='text/x-handlebars-template')
         .six.columns.text-left
             .btn.rfc#RFC10
                 a(href='#') 10
-            .btn.rfc#RFC12
+            .btn.rfc.disabled#RFC12
                 a(href='#') 12
-            .btn.rfc#RFC21
+            .btn.rfc.disabled#RFC21
                 a(href='#') 21
-            .btn.rfc#RFC23
+            .btn.rfc.disabled#RFC23
                 a(href='#') 23
-            .btn.rfc#RFC25
+            .btn.rfc.disabled#RFC25
                 a(href='#') 25
 
         .six.columns.text-right
@@ -65,14 +65,17 @@ script#templatePrimers(type='text/x-handlebars-template')
             h3 Construct Bin
             form#constructBin
                 select(size='7')
-                    {{#each construct}}
-                    option(id='construct-{{@index}}', onclick="Bricklayer.showInfo({{@index}})") {{name}}
-                    {{/each}}
-
-    //- Settings for RFC10 (for now...)
-    .row
-        h3 RFC Settings
-        
+    //
+        //- Settings for RFC10 (for now...)
+        .row
+            h3 RFC Settings
+            form
+                input(type='radio', name='coding option', value='Non Coding', onclick="Bricklayer.rfcTen('nonCoding')")
+                | Non Coding
+                br
+                input(type='radio', name='coding option', value='Coding', onclick="Bricklayer.rfcTen('coding')")
+                | Coding
+            br
 
 
     //- Display primers
