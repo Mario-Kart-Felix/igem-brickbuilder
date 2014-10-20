@@ -25,16 +25,45 @@ Bricklayer.Primers = {}
 
 reverse = (s) -> s.split("").reverse().join("")
 
-# List of Forward Primers for RFC Methods 10, 12, 21, 23, 25
-rfcTenFp = ""
-rfcTenRp = "CTGCAGCGGCCGCTACTAGTA"
+
+# Organizes get primer functions into one.
+# Returns array containing the forward primer and the reverse primer.
+# Fp = primers[0] and Rp = primers[1].
+# Since there are different conditions for each RFC method, need to have 5 different get functions
+
+# Define in class variable to store rfcMethod chosen. Defaulted to rfc method 10.
+rfcMethod = 10
+
+Bricklayer.Primers.getForwardPrimer =
+getForwardPrimer = (rfc, sequence) ->
+    fp = switch
+        when rfc == 10 then Bricklayer.RFCPrimers.tenFp(sequence)
+        when rfc == 12 then Bricklayer.RFCPrimers.twelveFp(sequence)
+        when rfc == 21 then Bricklayer.RFCPrimers.twentyOneFp(sequence)
+        when rfc == 23 then Bricklayer.RFCPrimers.twentyThreeFp(sequence)
+        when rfc == 25 then Bricklayer.RFCPrimers.twentyFiveFp(sequence)
+        else null
+    
+    fp
+
+Bricklayer.Primers.getReversePrimer =
+getReversePrimer = (rfc, sequence) ->
+    rp = switch
+        when rfc == 10 then Bricklayer.RFCPrimers.tenRp(sequence)
+        when rfc == 12 then Bricklayer.RFCPrimers.twelveRp(sequence)
+        when rfc == 21 then Bricklayer.RFCPrimers.twentyOneRp(sequence)
+        when rfc == 23 then Bricklayer.RFCPrimers.twentyThreeRp(sequence)
+        when rfc == 25 then Bricklayer.RFCPrimers.twentyFiveRp(sequence)
+        else null
+
+    rp
 
 # Figures out the primer needed to combine two DNA parts
-# The primer is a sequence that has the ending of partA and the beginning of partB.
-# The first part of the primer (the head) is made from the end of the sequence from partA.
-# the last part of the primer (the tail) is made from the beginning of the sequence from partB.
-# Each part of the primer, the head and tail, needs to have a melting temperature in the range of 50-60 degrees celsius.
-# The ideal temperature is the midpoint, so we want primers with a melting temperature of 55 degrees celsius.
+# The primer is a sequence that has the prefix for RFC 10 and the beginning of given part.
+# The prefix is given according to documentation of RFC method 10.
+# The sequence appended to the prefix is from the given part.
+# Sequence from the given part for the primer needs to have a melting temperature in between the max and min temperatures.
+# The ideal temperature is the midpoint, so we want primers with a melting temperature of 57.5 degrees celsius for range of 55-60.
 # The melting temperature of the primer changes as you make the primer longer.
 
 Bricklayer.Primers.getPrimer =
@@ -124,13 +153,12 @@ getPrimersForConstruct = (construct, minTemp, maxTemp) ->
 
             # get forward primer
             length = getLengthOfSubsequenceByTemp sequence, minTemp, maxTemp
-            checkForCoding(sequence)
-            primers.push rfcTenFp + sequence.substring(0, length)
+            primers.push getForwardPrimer(rfcMethod, sequence.substring(0, length))
 
             # get reverse primer
             endingSequence = getComplement reverse(sequence)
             length = getLengthOfSubsequenceByTemp endingSequence, minTemp, maxTemp
-            primers.push rfcTenRp + endingSequence.substring(0, length)
+            primers.push getReversePrimer(rfcMethod, endingSequence.substring(0, length))
 
         # Push 2 null elems to fill for convenience
         else
@@ -138,16 +166,6 @@ getPrimersForConstruct = (construct, minTemp, maxTemp) ->
             primers.push null
 
     primers
-
-
-# For RFC Method 10,
-# Forward primers differ for coding and non-coding parts
-# Mainly if sequence starts with ATG
-checkForCoding = (sequence) ->
-    if sequence.slice(0,3) == "ATG"
-        rfcTenFp = "GAATTCGCGGCCGCTTCTAG"
-    else
-        rfcTenFp = "GAATTCGCGGCCGCTTCTAGAG"
 
 Bricklayer.SequenceEntryView =
 SequenceEntryView = new Bricklayer.AppendView '#sequenceEntries', '#templateSequenceEntry'
@@ -300,5 +318,7 @@ Bricklayer.primeItUp = ->
 
 Bricklayer.rfcTen = (option) ->
     rfcTenFp = switch
-        when option == "nonCoding" then rfcTenFp = "GAATTCGCGGCCGCTTCTAGAG"
-        when option == "coding" then rfcTenFp = "GAATTCGCGGCCGCTTCTAG"
+        when option == "nonCoding" then "GAATTCGCGGCCGCTTCTAGAG"
+        when option == "coding" then "GAATTCGCGGCCGCTTCTAG"
+
+Bricklayer.setRfc = (rfc) -> rfcMethod = rfc

@@ -9,16 +9,16 @@ script#templatePrimers(type='text/x-handlebars-template')
     //- Buttons to select RFC
     .row
         .six.columns.text-left
-            .btn.rfc#RFC10
-                a(href='#') 10
-            .btn.rfc.disabled#RFC12
-                a(href='#') 12
+            .btn.rfc.selected#RFC10
+                a(href='#', onclick="Bricklayer.setRfc(10)") 10
+            .btn.rfc#RFC12
+                a(href='#', onclick="Bricklayer.setRfc(12)") 12
             .btn.rfc.disabled#RFC21
-                a(href='#') 21
-            .btn.rfc.disabled#RFC23
-                a(href='#') 23
-            .btn.rfc.disabled#RFC25
-                a(href='#') 25
+                a(href='#', onclick="Bricklayer.setRfc(21)") 21
+            .btn.rfc#RFC23
+                a(href='#', onclick="Bricklayer.setRfc(23)") 23
+            .btn.rfc#RFC25
+                a(href='#', onclick="Bricklayer.setRfc(25)") 25
 
         .six.columns.text-right
             a(href='#displayPrimers', onclick="Bricklayer.primeItUp()")
