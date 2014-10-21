@@ -34,10 +34,10 @@ Bricklayer.RFCPrimers.twelveRp =
 twelveRp = (sequence) -> return "CTGCAGCGGCCGCGCTAGC" + sequence
 
 Bricklayer.RFCPrimers.twentyOneFp =
-twentyOneFp = (sequence) -> return null
+twentyOneFp = (sequence) -> return "GAATTCATGAGATCT" + sequence
 
 Bricklayer.RFCPrimers.twentyOneRp =
-twentyOneRp = (sequence) -> return null
+twentyOneRp = (sequence) -> return "CTCGAGTTAGGATCC" + sequence
 
 Bricklayer.RFCPrimers.twentyThreeFp =
 twentyThreeFp = (sequence) -> return "GAATTCGCGGCCGCTTCTAGA" + sequence
