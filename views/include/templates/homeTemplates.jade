@@ -19,17 +19,7 @@ script#templateSearchFields(type='text/x-handlebars-template')
             img(src='images/brickBuilder.jpg')
         .six.columns.text-right
             h1
-
-            p Search for one phrase in the fields: short description, description, notes, and author. When searching for a part name, use the short version (e.g. B0010).  
             +searchForm("Text Search", "form-text-search", "#", toolTip.textSrc) 
-            p Search for parts with names following this part. Enter a part name such as BBa_K123456 and the software will find up to 1000 parts with a name like BBa_K123xxx where the part name is equal to or beyond BBa_K123456. (The BBa_ is optional as usual.)
             +searchForm("1000 Parts Search", "form-thousand-search", "#", toolTip.src1000)
-            p Search for parts that match a portion of this part or this sequence of parts.
             +searchForm("Subparts Search", "form-subpart-search", "#", toolTip.subSrc)
-            p Search for parts that contain these parts.
             +searchForm("Superparts Search", "form-superpart-search", "#", toolTip.superSrc)
-            p Enter an individual part
-            .append.field
-                input.wide.input#brickName(type='text', placeholder='Brick Name')
-                .medium.primary.btn(onclick="Bricklayer.manualAdd()")
-                    input(type='submit', value='Add') Add
