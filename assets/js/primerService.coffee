@@ -321,4 +321,7 @@ Bricklayer.rfcTen = (option) ->
         when option == "nonCoding" then "GAATTCGCGGCCGCTTCTAGAG"
         when option == "coding" then "GAATTCGCGGCCGCTTCTAG"
 
-Bricklayer.setRfc = (rfc) -> rfcMethod = rfc
+Bricklayer.setRfc = (rfcNum) ->
+    rfcMethod = rfcNum
+    $('.selected').attr("class", "btn rfc")
+    $('#RFC' + rfcNum).attr("class", "btn rfc selected")
